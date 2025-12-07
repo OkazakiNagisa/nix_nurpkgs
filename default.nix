@@ -16,4 +16,6 @@
   overlays = import ./overlays; # nixpkgs overlays
 
   example-package = pkgs.callPackage ./pkgs/example-package { };
+  flatseal = pkgs.callPackage ./pkgs/flatseal { };
+  bubblejail = pkgs.callPackage ./pkgs/bubblejail { };
 }
