@@ -1,8 +1,12 @@
 { pkgs }:
-
-with pkgs.lib;
-{
-  # Add your library functions here
-  #
-  # hexint = x: hexvals.${toLower x};
-}
+let
+  lib = pkgs.lib;
+  globNixFiles = import ./globNixFiles.nix lib;
+  getFilenameNoSuffix = import ./getFilenameNoSuffix.nix lib;
+in
+builtins.listToAttrs (
+  map (file: {
+    name = getFilenameNoSuffix file;
+    value = import file lib;
+  }) (globNixFiles ./.)
+)

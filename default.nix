@@ -5,17 +5,22 @@
 # Having pkgs default to <nixpkgs> is fine though, and it lets you use short
 # commands such as:
 #     nix-build -A mypackage
-
 {
   pkgs ? import <nixpkgs> { },
 }:
-
+let
+  mylib = import ./lib { inherit pkgs; };
+  mypkgs = builtins.listToAttrs (
+    map (file: {
+      name = mylib.getFilenameNoSuffix file;
+      value = pkgs.callPackage file { };
+    }) (mylib.globPackages ./pkgs)
+  );
+in
 {
   # The `lib`, `modules`, and `overlays` names are special
-  lib = import ./lib { inherit pkgs; }; # functions
+  # modules = import ./modules; # NixOS modules
   overlays = import ./overlays; # nixpkgs overlays
-
-  example-package = pkgs.callPackage ./pkgs/example-package { };
-  flatseal = pkgs.callPackage ./pkgs/flatseal { };
-  bubblejail = pkgs.callPackage ./pkgs/bubblejail { };
+  # example-package = pkgs.callPackage ./pkgs/example-package { };
 }
+// mypkgs

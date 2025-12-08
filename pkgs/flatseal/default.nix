@@ -3,7 +3,7 @@ stdenv.mkDerivation rec {
   pname = "flatseal";
   version = "2.4.0";
 
-  src = ./.;
+  src = ./Flatseal;
 
   nativeBuildInputs = with pkgs; [
     meson
