@@ -1,0 +1,35 @@
+{
+  lib,
+  pkgs,
+}:
+pkgs.appimageTools.wrapAppImage rec {
+  meta = with lib; {
+    description = "A terminal for a more modern age";
+    homepage = "https://github.com/Eugeny/tabby";
+    license = licenses.mit;
+    platforms = [ "x86_64-linux" ];
+    maintainers = with maintainers; [ ];
+    mainProgram = "tabby";
+  };
+
+  pname = "tabby";
+  version = "1.0.215";
+
+  src = pkgs.appimageTools.extract {
+    inherit pname version;
+    src = pkgs.fetchurl {
+      url = "https://github.com/Eugeny/tabby/releases/download/v${version}/tabby-${version}-linux-x64.AppImage";
+      sha256 = "sha256-7/p/kQYX8ydMOznl0ti0VgnU7c5jLp9IonI99zjeN+w="; # `nix-prefetch-url <url>`
+    };
+  };
+
+  extraInstallCommands = ''
+    install -Dm444 ${src}/tabby.desktop -t $out/share/applications
+    install -Dm444 ${src}/tabby.png -t $out/share/pixmaps
+  '';
+
+  extraPkgs =
+    pkgs: with pkgs; [
+      xdg-utils
+    ];
+}
