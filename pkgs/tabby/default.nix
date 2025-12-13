@@ -1,13 +1,16 @@
 {
   lib,
-  pkgs,
+  appimageTools,
+  fetchurl,
+  makeWrapper,
 }:
-pkgs.appimageTools.wrapAppImage rec {
+
+appimageTools.wrapAppImage rec {
   meta = with lib; {
     description = "A terminal for a more modern age";
     homepage = "https://github.com/Eugeny/tabby";
     license = licenses.mit;
-    sourceProvenance = with lib.sourceTypes; [ binaryNativeCode ];
+    sourceProvenance = with sourceTypes; [ binaryNativeCode ];
     platforms = [ "x86_64-linux" ];
     mainProgram = "tabby";
   };
@@ -15,9 +18,9 @@ pkgs.appimageTools.wrapAppImage rec {
   pname = "tabby";
   version = "1.0.215";
 
-  src = pkgs.appimageTools.extract {
+  src = appimageTools.extract {
     inherit pname version;
-    src = pkgs.fetchurl {
+    src = fetchurl {
       url = "https://github.com/Eugeny/tabby/releases/download/v${version}/tabby-${version}-linux-x64.AppImage";
       sha256 = "sha256-7/p/kQYX8ydMOznl0ti0VgnU7c5jLp9IonI99zjeN+w=";
     };
@@ -30,7 +33,7 @@ pkgs.appimageTools.wrapAppImage rec {
     substituteInPlace $out/share/applications/tabby.desktop \
       --replace-fail "Exec=AppRun" "Exec=tabby"
 
-    . ${pkgs.makeWrapper}/nix-support/setup-hook
+    . ${makeWrapper}/nix-support/setup-hook
     wrapProgram $out/bin/tabby \
       --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --enable-features=WaylandWindowDecorations --enable-wayland-ime=true}}"
   '';

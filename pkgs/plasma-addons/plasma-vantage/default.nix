@@ -3,7 +3,6 @@
   stdenvNoCC,
   fetchFromGitLab,
   kdePackages,
-  breakpointHook
 }:
 
 stdenvNoCC.mkDerivation rec {
@@ -11,7 +10,7 @@ stdenvNoCC.mkDerivation rec {
     description = "Plasma widget to control Lenovo Legion/Ideapad laptop features (PlasmaVantage)";
     homepage = "https://gitlab.com/Scias/plasmavantage";
     license = licenses.mpl20;
-    sourceProvenance = with lib.sourceTypes; [ fromSource ];
+    sourceProvenance = with sourceTypes; [ fromSource ];
     platforms = platforms.linux;
     mainProgram = null;
   };
