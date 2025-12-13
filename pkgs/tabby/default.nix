@@ -34,9 +34,4 @@ pkgs.appimageTools.wrapAppImage rec {
     wrapProgram $out/bin/tabby \
       --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --enable-features=WaylandWindowDecorations --enable-wayland-ime=true}}"
   '';
-
-  extraPkgs =
-    pkgs: with pkgs; [
-      xdg-utils
-    ];
 }
