@@ -28,17 +28,11 @@ stdenvNoCC.mkDerivation rec {
 
   dontBuild = true;
 
-  nativeBuildInputs = [
-    kdePackages.kpackage
-    breakpointHook
-  ];
-
   installPhase = ''
     runHook preInstall
 
-    kpackagetool6 --type=Plasma/Applet \
-                  --install=$src/package \
-                  --packageroot=$out/share/plasma/plasmoids
+    mkdir -p $out/share/plasma/plasmoids
+    cp -r $src/package $out/share/plasma/plasmoids/com.gitlab.scias.plasmavantage
 
     runHook postInstall
   '';
