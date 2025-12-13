@@ -7,6 +7,7 @@ pkgs.appimageTools.wrapAppImage rec {
     description = "A terminal for a more modern age";
     homepage = "https://github.com/Eugeny/tabby";
     license = licenses.mit;
+    sourceProvenance = with lib.sourceTypes; [ binaryNativeCode ];
     platforms = [ "x86_64-linux" ];
     mainProgram = "tabby";
   };
