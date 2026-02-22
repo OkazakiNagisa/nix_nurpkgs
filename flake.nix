@@ -16,27 +16,25 @@
     {
       lib = import ./lib { inherit (nixpkgs) lib; };
 
+      packages = forAllSystems (
+        system:
+        builtins.listToAttrs (
+          map (file: {
+            name = self.lib.getFilenameNoSuffix file;
+            value = nixpkgs.legacyPackages.${system}.callPackage file { };
+          }) (self.lib.globPackages ./pkgs)
+        )
+      );
+
       legacyPackages = forAllSystems (
         system:
-        let
-          mypkgs = builtins.listToAttrs (
-            map (file: {
-              name = self.lib.getFilenameNoSuffix file;
-              value = nixpkgs.legacyPackages.${system}.callPackage file { };
-            }) (self.lib.globPackages ./pkgs)
-          );
-        in
-        mypkgs
+        self.packages.${system}
         // {
           # The `lib`, `modules`, and `overlays` names are special
           # modules = import ./modules; # NixOS modules
           # overlays = import ./overlays; # nixpkgs overlays
           # example-package = pkgs.callPackage ./pkgs/example-package { };
         }
-      );
-
-      packages = forAllSystems (
-        system: nixpkgs.lib.filterAttrs (_: v: nixpkgs.lib.isDerivation v) self.legacyPackages.${system}
       );
     };
 }
