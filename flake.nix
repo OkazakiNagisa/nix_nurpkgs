@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    flake-compat.url = "github:NixOS/flake-compat/v1.1.0";
+    flake-compat.url = "./dependencies/flake-compat-ff81ac966bb2cae68946d5ed5fc4994f96d0ffec"; # github:NixOS/flake-compat/v1.1.0
     flake-compat.flake = false;
   };
 

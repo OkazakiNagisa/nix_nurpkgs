@@ -3,19 +3,14 @@
     "flake-compat": {
       "flake": false,
       "locked": {
-        "lastModified": 1733328505,
-        "narHash": "sha256-NeCCThCEP3eCl2l/+27kNNK7QrwZB1IJCrXfrbv5oqU=",
-        "owner": "NixOS",
-        "repo": "flake-compat",
-        "rev": "ff81ac966bb2cae68946d5ed5fc4994f96d0ffec",
-        "type": "github"
+        "path": "./dependencies/flake-compat-ff81ac966bb2cae68946d5ed5fc4994f96d0ffec",
+        "type": "path"
       },
       "original": {
-        "owner": "NixOS",
-        "ref": "v1.1.0",
-        "repo": "flake-compat",
-        "type": "github"
-      }
+        "path": "./dependencies/flake-compat-ff81ac966bb2cae68946d5ed5fc4994f96d0ffec",
+        "type": "path"
+      },
+      "parent": []
     },
     "nixpkgs": {
       "locked": {
